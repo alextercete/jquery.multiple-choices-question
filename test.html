@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.multiple-choices-question.js"></script>
+	<script type="text/javascript">
+	(function( $ ) {
+		
+		$(function() {
+
+			$.multipleChoicesQuestion.setDefaults({
+				answers: ["Sim", "Não", "Nenhuma das anteriores"],
+				afterChoice: updateResults
+			});
+
+			$("#primeira").multipleChoicesQuestion({
+				answers: ["1", "2", "4", "1 zilhão"],
+				correctChoiceIndex: 2
+			});
+			$("#segunda").multipleChoicesQuestion({
+				answers: ["Pedro Álvares Cabral", "Tiririca", "Bozo, o Palhaço"]
+			});
+			$("#terceira").multipleChoicesQuestion({
+				answers: ["O Acre não existe", "Rio Branco", "Roraima?"],
+				correctChoiceIndex: 1
+			});
+
+			updateResults();
+
+			function updateResults()
+			{
+				var html = "";
+
+				$("#questoes").find('li').each(function( i ) {
+						var questionResult = $(this).multipleChoicesQuestion('correct') ? "certa" : "errada";
+
+						html += "<p>A questão " + ( i + 1 ) + " está " + questionResult + ".</p>";
+						});
+
+				$("#resultados").html(html);
+			}
+
+		});
+
+	})( jQuery );
+	</script>
+	<meta charset=utf-8 />
+	<title>jquery.multiple-choices-question Test Page</title>
+</head>
+
+<body>
+	<h2>Perguntas</h2>
+	<ol id="questoes">
+		<li id="primeira">Quanto é 2 + 2?</li>
+		<li id="segunda">Quem descobriu o Brasil?</li>
+		<li id="terceira">Qual é a capital do Acre?</li>
+	</ol>
+	<h2>Resultados</h2>
+	<div id="resultados"></div>
+</body>
+</html>
